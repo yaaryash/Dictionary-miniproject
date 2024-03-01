@@ -1,45 +1,47 @@
+import "./App.css";
 import React, { useState } from "react";
 
-const XDictionary = () => {
-  const initialDictionary = [
-    {
-      word: "React",
-      meaning: "A JavaScript library for building user interfaces.",
-    },
-    { word: "Component", meaning: "A reusable building block in React." },
-    { word: "State", meaning: "An object that stores data for a component." },
-  ];
+const dictionary = [
+  {
+    word: "React",
+    meaning: "A JavaScript library for building user interfaces.",
+  },
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState("");
+  { word: "Component", meaning: "A reusable building block in React." },
+
+  { word: "State", meaning: "An object that stores data for a component." },
+];
+
+function App() {
+  const [input, setInput] = useState("");
+  const [definition, setDefinition] = useState("");
 
   const handleSearch = () => {
-    const foundWord = initialDictionary.find(
-      (entry) => entry.word.toLowerCase() === searchTerm.toLowerCase()
+    const words = input.toLowerCase();
+    const findWord = dictionary.find(
+      (entry) => entry.word.toLowerCase() === words
     );
-    if (foundWord) {
-      setSearchResult(foundWord.meaning);
+    if (findWord) {
+      setDefinition(findWord.meaning);
+      setInput("");
     } else {
-      setSearchResult("Word not found in the dictionary.");
+      setDefinition("Word not found in the dictionary.");
     }
   };
-
   return (
-    <div>
-      <h1>XDictionary</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter a word"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-      <div>Defination:</div>
-      <div>{searchResult && <p>{searchResult}</p>}</div>
+    <div className="App">
+      <h1>Dictionary App</h1>
+      <input
+        value={input}
+        type="text"
+        placeholder="Search for a word..."
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+      <p>Definition:</p>
+      <p>{definition}</p>
     </div>
   );
-};
+}
 
-export default XDictionary;
+export default App;
